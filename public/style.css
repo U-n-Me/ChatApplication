@@ -6,77 +6,120 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: helvetica, arial, sans-serif;
   margin: 25px;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 2px;
 }
 
-h1 {
-  font-weight: bold;
-  color: pink;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-p {
-  max-width: 600px;
-}
-
-form {
-  margin-bottom: 25px;
-  padding: 15px;
-  background-color: cyan;
-  display: inline-block;
+header{
   width: 100%;
-  max-width: 340px;
-  border-radius: 3px;
+  background-color: #59DE98;
+  border: 2px solid #888;
+  padding: 10px;
+  font-weight: bold;
+  word-spacing: 5px;
 }
 
-input {
-  display: block;
-  margin-bottom: 10px;
+.container{
+  margin: 8px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#userName{
   padding: 5px;
+  background-color: #43D1AF;
+  border-radius: 10px;
+}
+
+.chatWindow{
   width: 100%;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-  font-size: 16px;
+  background: #99FFCA;
+  margin: 7px auto;
+  border-radius: 7px;
 }
 
-button {
-  font-size: 16px;
-  border-radius: 3px;
-  background-color: lightgrey;
-  border: 1px solid grey;
-  box-shadow: 2px 2px teal;
-  cursor: pointer;
+.compose textarea{
+  width: 98%;
+  background: #fff;
+  margin-bottom: 2px;
+  border: 2px solid #aaa;
+  border-radius: 5px;
+  min-height: 50px;
+  padding: 5px;
+  color: #555;
 }
 
-button:hover {
-  background-color: yellow;
+.chats{
+  height: 280px;
+  overflow-y: auto;
+  width: 96%;
+  border-radius: 10px;
+  background-color: #DDD;
+  margin: 5px auto;
 }
 
-button:active {
-  box-shadow: none;
+button{
+  background: #43D1AF;
+  padding: 5px;
+  font-size: 125%;
+  font-weight: 300;
+  color: #fff;
+	margin-bottom: 2px;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
 }
 
-li {
-  margin-bottom: 5px;
+button:hover,
+button:active{
+  /*transform: translate(2px, 1px);*/
+  box-shadow: 0 0 15px #fff;
 }
 
-footer {
-  margin-top: 50px;
-  padding-top: 25px;
-  border-top: 1px solid lightgrey;
+.logs{
+  overflow-y: auto;
+  height: 200px;
+  width: 80%;
+  background-color: #ADef34;
+  margin: 10px auto;
+  border: solid #555 5px;
 }
 
-footer > a {
-  color: #BBBBBB;
+.mess{
+  font-size: .8em;
+  width: 85%;
+  margin-bottom: 7px;
+  border: 2px solid white;
+  border-radius: 5px;
+  padding: 2px;
 }
 
-.nicejob {
-  text-decoration: line-through;
+.receivedMsg{
+  text-align: left;
+  position: relative;
+  left: 2px;
+}
+
+.sentMsg{
+  text-align: left;
+  position: relative;
+  left: 14%;
+}
+
+.receivedMsg:first-of-type{
+  margin-top: 7px;
+}
+
+.sender{
+  text-align: right;
+  font-size: 0.7em;
 }

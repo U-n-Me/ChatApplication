@@ -44,15 +44,15 @@ wsServer.on('request', function(request){
         userName = message.utf8Data;
         if(clients.hasOwnProperty(userName))
           userName += '@'+Math.round(Math.random() * 0xFFFF);
-        connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date(), username: userName}));
+        connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date().toLocaleString("en-US"), username: userName}));
         clients[userName] = connection;
         console.log(new Date + ": " + userName + " added.");
-        broadCast({type: 'broadcast_log', time: new Date(), message: userName + ' is active.'});
+        broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US"), message: userName + ' is active.'});
       }
       else{
         var message = message.utf8Data;
-        console.log(new Date + ": " + userName + ": "+ message);
-        broadCast({type: 'message', sender: userName, time: new Date(), message: message});
+        console.log(new Date().toLocaleString("en-US") + ": " + userName + ": "+ message);
+        broadCast({type: 'message', sender: userName, time: new Date().toLocaleString("en-US"), message: message});
       }
     }
   });
@@ -60,7 +60,7 @@ wsServer.on('request', function(request){
   connection.on('close', function(reasonCode, description) {
     delete clients[userName];
     console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
-    broadCast({type: 'broadcast_log', time: new Date(), message: userName + ' is offline.'});
+    broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US"), message: userName + ' is offline.'});
     });
 
     function broadCast(json){
