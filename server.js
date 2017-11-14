@@ -55,6 +55,7 @@ wsServer.on('request', function(request){
         clients[userName] = {connection: connection, color: clr};
         console.log(new Date + ": " + userName + " added.");
         broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is active.'});
+        broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: clients.length + " active users."});
       }
       else{
         var message = message.utf8Data;
@@ -68,6 +69,7 @@ wsServer.on('request', function(request){
     delete clients[userName];
     console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is offline.'});
+    broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: Object.keys(clients).length + " active users."});
     });
 
     function broadCast(json){
