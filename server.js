@@ -1,6 +1,7 @@
 var WebSocketServer = require('websocket').server;
 var http = require('http');
 var portNo = 8090;
+var options = { weekday: 'short', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'};
 
 var server = http.createServer(function(req, res){
   // We are not dealing with http now, so no need to
@@ -44,19 +45,19 @@ wsServer.on('request', function(request){
         userName = message.utf8Data;
         if(clients.hasOwnProperty(userName))
           userName += '@'+Math.round(Math.random() * 0xFFFF);
-        connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date().toLocaleString("en-US"), username: userName}));
+        connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date().toLocaleString("en-US", options), username: userName}));
         // Give a color to each connection
         var r = Math.floor(Math.random()*256), g = Math.floor(Math.random()*256), b = Math.floor(Math.random()*256);
         if(r < 16)r = 16; if(g < 16)g = 16; if(b < 16)b = 16;
         var clr = "#"+r.toString(16)+g.toString(16)+b.toString(16);
         clients[userName] = {connection: connection, color: clr};
         console.log(new Date + ": " + userName + " added.");
-        broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US"), message: userName + ' is active.'});
+        broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is active.'});
       }
       else{
         var message = message.utf8Data;
         console.log(new Date().toLocaleString("en-US") + ": " + userName + ": "+ message);
-        broadCast({type: 'message', sender: userName,color: clients[userName].color, time: new Date().toLocaleString("en-US"), message: message});
+        broadCast({type: 'message', sender: userName,color: clients[userName].color, time: new Date().toLocaleString("en-US", options), message: message});
       }
     }
   });
@@ -64,7 +65,7 @@ wsServer.on('request', function(request){
   connection.on('close', function(reasonCode, description) {
     delete clients[userName];
     console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
-    broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US"), message: userName + ' is offline.'});
+    broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is offline.'});
     });
 
     function broadCast(json){
