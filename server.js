@@ -34,7 +34,7 @@ wsServer.on('request', function(request){
   }
   var connection = request.accept(null, origin);
   var owner = connection.socket._handle.owner._peername;
-  console.log(new Date() + " Accepted: Connection from " + owner + " .");
+  console.log(new Date() + " Accepted: Connection from " + JSON.stringify(owner) + " .");
   //var index = clients.push(connection) - 1;
   var userName = null;
 
@@ -45,14 +45,18 @@ wsServer.on('request', function(request){
         if(clients.hasOwnProperty(userName))
           userName += '@'+Math.round(Math.random() * 0xFFFF);
         connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date().toLocaleString("en-US"), username: userName}));
-        clients[userName] = connection;
+        // Give a color to each connection
+        var r = Math.floor(Math.random()*256), g = Math.floor(Math.random()*256), b = Math.floor(Math.random()*256);
+        if(r < 16)r = 16; if(g < 16)g = 16; if(b < 16)b = 16;
+        var clr = "#"+r.toString(16)+g.toString(16)+b.toString(16);
+        clients[userName] = {connection: connection, color: clr};
         console.log(new Date + ": " + userName + " added.");
         broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US"), message: userName + ' is active.'});
       }
       else{
         var message = message.utf8Data;
         console.log(new Date().toLocaleString("en-US") + ": " + userName + ": "+ message);
-        broadCast({type: 'message', sender: userName, time: new Date().toLocaleString("en-US"), message: message});
+        broadCast({type: 'message', sender: userName,color: clients[userName].color, time: new Date().toLocaleString("en-US"), message: message});
       }
     }
   });
@@ -66,7 +70,7 @@ wsServer.on('request', function(request){
     function broadCast(json){
       for(var client in clients){
         if(client !== userName)
-          clients[client].sendUTF(JSON.stringify(json));
+          clients[client].connection.sendUTF(JSON.stringify(json));
       }
     }
 });
