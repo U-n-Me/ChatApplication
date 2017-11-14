@@ -45,11 +45,13 @@ wsServer.on('request', function(request){
         userName = message.utf8Data;
         if(clients.hasOwnProperty(userName))
           userName += '@'+Math.round(Math.random() * 0xFFFF);
-        connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date().toLocaleString("en-US", options), username: userName}));
         // Give a color to each connection
         var r = Math.floor(Math.random()*256), g = Math.floor(Math.random()*256), b = Math.floor(Math.random()*256);
         if(r < 16)r = 16; if(g < 16)g = 16; if(b < 16)b = 16;
         var clr = "#"+r.toString(16)+g.toString(16)+b.toString(16);
+        //send info to client
+      connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date().toLocaleString("en-US", options),
+                                username: userName, color: clr}));
         clients[userName] = {connection: connection, color: clr};
         console.log(new Date + ": " + userName + " added.");
         broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is active.'});

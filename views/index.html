@@ -15,8 +15,7 @@
     <div class = "container">
       <div class = "chatWindow">
         <p id = "userName">Current Time Mr. XXX</p>
-        <div class = "chats">Your First Message is Your User Name.<br>
-          Only after giving your user name, you can chat.
+        <div class = "chats">
           <!-- Received Message-->
           <div class = "receivedMsg mess" style = "background-color: #454;">
               <div class="sender">Kamlesh, 5:55PM</div>
@@ -40,18 +39,93 @@
               <div class = "message">Remove this hardcoded stuff :P</div>
               <div class="sender">Ume, 6:08PM</div>
           </div>
+          <!-- Received Message-->
+          <div class = "receivedMsg mess" style = "background-color: #454;">
+              <div class="sender">Kamlesh, 5:55PM</div>
+              <div class = "message">Hey there! We have been working on this for a very long time.</div>
+          </div>
+
+          <!-- Sent Message-->
+          <div class = "sentMsg mess" style = "background-color: #cdf;">
+              <div class = "message">Hi! YEah that's true.</div>
+              <div class="sender">Ume, 5:58PM</div>
+          </div>
+
+          <!-- Received Message-->
+          <div class = "receivedMsg mess" style = "background-color: #454;">
+              <div class="sender">Raman, 6:05PM</div>
+              <div class = "message">What's now?</div>
+          </div>
+
+          <!-- Sent Message-->
+          <div class = "sentMsg mess" style = "background-color: #cdf;">
+              <div class = "message">Remove this hardcoded stuff :P</div>
+              <div class="sender">Ume, 6:08PM</div>
+          </div>
+          <!-- Received Message-->
+          <div class = "receivedMsg mess" style = "background-color: #454;">
+              <div class="sender">Kamlesh, 5:55PM</div>
+              <div class = "message">Hey there! We have been working on this for a very long time.</div>
+          </div>
+
+          <!-- Sent Message-->
+          <div class = "sentMsg mess" style = "background-color: #cdf;">
+              <div class = "message">Hi! YEah that's true.</div>
+              <div class="sender">Ume, 5:58PM</div>
+          </div>
+
+          <!-- Received Message-->
+          <div class = "receivedMsg mess" style = "background-color: #454;">
+              <div class="sender">Raman, 6:05PM</div>
+              <div class = "message">What's now?</div>
+          </div>
+
+          <!-- Sent Message-->
+          <div class = "sentMsg mess" style = "background-color: #cdf;">
+              <div class = "message">Remove this hardcoded stuff :P</div>
+              <div class="sender">Ume, 6:08PM</div>
+          </div>
+
         </div>
-        <form class = "compose">
-          <textarea name = "message" placeholder = "User Name or Message" required></textarea>
-          <button type = "submit">SEND</button>
-        </form>
+        <div class = "compose">
+          <textarea name = "message" placeholder = "User Name or Message"></textarea>
+          <button type = "submit" onclick="sendMsg()">SEND</button>
+        </div>
+
       </div>
 
-      <div class = "logs">Logs</div>
+      <div class = "logs">
+        <p id = "logsP">LOGS</p>
+        <div class = "log">
+          >>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+          Monday, 13 Nov 09:33AM: Kamlesh joined the group.<br>>>
+          Monday, 13 Nov 09:55AM: Kamlesh left the group.<br>>>
+        </div>
+      </div>
     </div>
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script src="/client.js"></script>
+    <script src="../public/client.js"></script>
 
   </body>
 </html>

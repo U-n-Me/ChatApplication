@@ -13,9 +13,9 @@
 body {
   font-family: helvetica, arial, sans-serif;
   margin: 25px;
-  font-size: 15px;
-  text-align: center;
+  font-size: 11px;
   letter-spacing: 2px;
+  text-align: center;
 }
 
 header{
@@ -24,7 +24,8 @@ header{
   border: 2px solid #888;
   padding: 10px;
   font-weight: bold;
-  word-spacing: 5px;
+  letter-spacing: 4px;
+  word-spacing: 6px;
 }
 
 .container{
@@ -37,13 +38,13 @@ header{
 #userName{
   padding: 5px;
   background-color: #43D1AF;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .chatWindow{
   width: 100%;
   background: #99FFCA;
-  margin: 7px auto;
+  margin: 6px auto;
   border-radius: 7px;
 }
 
@@ -55,52 +56,47 @@ header{
   border-radius: 5px;
   min-height: 50px;
   padding: 5px;
-  color: #555;
+  outline: 0;
+  color: #444;
 }
 
 .chats{
-  height: 280px;
+  height: 310px;
   overflow-y: auto;
   width: 96%;
   border-radius: 10px;
-  background-color: #DDD;
+  background-color: #eee;
   margin: 5px auto;
+  padding: 10px 0;
 }
 
 button{
   background: #43D1AF;
   padding: 5px;
-  font-size: 125%;
+  font-size: 1.1em;
   font-weight: 300;
   color: #fff;
 	margin-bottom: 2px;
 	border-radius: 10px;
-	border: none;
+  border: none;
+	outline: 0;
 	cursor: pointer;
 }
 
-button:hover,
-button:active{
-  /*transform: translate(2px, 1px);*/
-  box-shadow: 0 0 15px #fff;
+button:hover{
+  box-shadow: 0 0 25px #fff;
 }
-
-.logs{
-  overflow-y: auto;
-  height: 200px;
-  width: 80%;
-  background-color: #ADef34;
-  margin: 10px auto;
-  border: solid #555 5px;
+button:active{
+  transform: translate(2px, 1px);
 }
 
 .mess{
-  font-size: .8em;
-  width: 85%;
+  max-width: 85%;
   margin-bottom: 7px;
   border: 2px solid white;
   border-radius: 5px;
-  padding: 2px;
+  padding: 0 2px;
+  color: #fff;
 }
 
 .receivedMsg{
@@ -115,11 +111,76 @@ button:active{
   left: 14%;
 }
 
-.receivedMsg:first-of-type{
-  margin-top: 7px;
+.mess:last-of-type{
+  margin-bottom: 0;
 }
 
 .sender{
   text-align: right;
   font-size: 0.7em;
+  margin: 3px 0;
+  color: #000;
+}
+
+
+.logs{
+  width: 100%;
+  background-color: black;
+  margin: 10px auto;
+  color: red;
+  border: solid #555 3px;
+}
+
+#logsP{
+  background-color: grey;
+  padding: 5px;
+  font-size: 1.3em;
+  font-weight: bolder;
+  color: white;
+}
+
+.log{
+  height: 270px;
+  overflow-y: auto;
+  text-align: left;
+  font-size: .85em;
+  padding: 3px 4px;
+}
+
+
+@media screen and (max-width: 920px) and (min-width: 565px){
+  body{
+    font-size: 14px;
+  }
+
+  .chatWindow{
+    width: 500px;
+  }
+
+  .chats{
+    height: 350px;
+  }
+
+  .logs{
+    width: 488px;
+  }
+}
+
+@media screen and (min-width: 921px){
+  body{
+    font-size: 16px;
+  }
+
+  .chatWindow{
+    width: 520px;
+  }
+
+  .chats{
+    height: 400px;
+  }
+
+  .logs{
+    width: 500px;
+    height: 315px;
+  }
 }
