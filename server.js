@@ -1,20 +1,22 @@
+// Setup basic express server
+var express = require('express');
+var app = express();
+var http = require('http').createServer(app);
 var WebSocketServer = require('websocket').server;
-var http = require('http');
-var portNo = 8090;
+var port = process.env.PORT || 3000;
+
 var options = { weekday: 'short', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'};
 
-var server = http.createServer(function(req, res){
-  // We are not dealing with http now, so no need to
-  // implement anything here
+http.listen(port, function () {
+  console.log('Server listening at port %d', port);
 });
 
-server.listen(portNo, function(){
-  console.log("Server listening on port: "+ portNo);
-});
+// Routing
+app.use(express.static('public'));
 
 // Let's start WebSocket Server
-wsServer = new WebSocketServer({
-  httpServer : server
+var wsServer = new WebSocketServer({
+  httpServer : http
 });
 
 function originIsAllowed(origin){
@@ -24,6 +26,7 @@ function originIsAllowed(origin){
 
 // whole server(app) data
 var clients = {};
+var activeUsers = 0;
 
 wsServer.on('request', function(request){
   var origin = request.origin;
@@ -42,20 +45,7 @@ wsServer.on('request', function(request){
   connection.on('message', function(message){
     if(message.type === 'utf8'){
       if(userName === null){
-        userName = message.utf8Data;
-        if(clients.hasOwnProperty(userName))
-          userName += '@'+Math.round(Math.random() * 0xFFFF);
-        // Give a color to each connection
-        var r = Math.floor(Math.random()*256), g = Math.floor(Math.random()*256), b = Math.floor(Math.random()*256);
-        if(r < 16)r = 16; if(g < 16)g = 16; if(b < 16)b = 16;
-        var clr = "#"+r.toString(16)+g.toString(16)+b.toString(16);
-        //send info to client
-      connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date().toLocaleString("en-US", options),
-                                username: userName, color: clr}));
-        clients[userName] = {connection: connection, color: clr};
-        console.log(new Date + ": " + userName + " added.");
-        broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is active.'});
-        broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: clients.length + " active users."});
+        addClient(message);
       }
       else{
         var message = message.utf8Data;
@@ -66,16 +56,46 @@ wsServer.on('request', function(request){
   });
 
   connection.on('close', function(reasonCode, description) {
+    if(!clients.hasOwnProperty([userName]))
+      return;
     delete clients[userName];
+    activeUsers--;
     console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
-    broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is offline.'});
-    broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: Object.keys(clients).length + " active users."});
-    });
+    console.log(activeUsers+" active users.");
+    var actives = {type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is offline. ' + activeUsers + " active users."};
+    if(activeUsers == 1)
+      actives = {type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + " is offline. Only you are active."};
+    broadCast(actives);
+   });
 
-    function broadCast(json){
+  
+  function broadCast(json){
       for(var client in clients){
         if(client !== userName)
           clients[client].connection.sendUTF(JSON.stringify(json));
       }
-    }
+  }
+  
+  function addClient(message){
+    userName = message.utf8Data;
+    if(clients.hasOwnProperty(userName))
+      userName += '@'+Math.round(Math.random() * 0xFFFF);
+    // Give a color to each connection
+    var r = Math.floor(Math.random()*256), g = Math.floor(Math.random()*256), b = Math.floor(Math.random()*256);
+    if(r < 16)r = 16; if(g < 16)g = 16; if(b < 16)b = 16;
+    var clr = "#"+r.toString(16)+g.toString(16)+b.toString(16);
+    activeUsers++;
+    //send info to client
+    connection.sendUTF(JSON.stringify({type: 'personal_log', time: new Date().toLocaleString("en-US", options),
+                            username: userName, color: clr}));
+    clients[userName] = {connection: connection, color: clr};
+    console.log(new Date + ": " + userName + " added.");
+    console.log(activeUsers+" active users.");
+    broadCast({type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: userName + ' is active.'});
+    var actives = {type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: activeUsers + " active users."};
+    if(activeUsers == 1)
+      actives = {type: 'broadcast_log', time: new Date().toLocaleString("en-US", options), message: "Only you are active."};
+    broadCast(actives);
+    connection.sendUTF(JSON.stringify(actives));
+  }
 });

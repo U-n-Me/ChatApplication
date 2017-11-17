@@ -17,7 +17,8 @@ $(function() {
    return;
  }
 
- connection = new WebSocket('ws://localhost:8090');
+  // for connections over https, use wss instead of ws
+ connection = new WebSocket('wss://chatapp.glitch.me/');
 
  connection.onopen = function () {
    // Do what you need at server startup
