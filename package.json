@@ -11,7 +11,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.2",
+    "express": "^4.15.3",
     "websocket": "^1.0.25"
   },
   "engines": {
@@ -24,6 +24,7 @@
   "keywords": [
     "node",
     "glitch",
-    "express"
+    "websocket",
+    "chat Application"
   ]
 }
